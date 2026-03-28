@@ -20,7 +20,7 @@ services:
       # A fixed APP_KEY so Koel survives container recreation.
       # To rotate: run `docker exec <container> php artisan key:generate --show`
       # then replace this value and restart.
-      APP_KEY: base64:ZHVtbXlrZXlmb3J1bWJyZWxrb2VsYXBwMTIzNA==
+      APP_KEY: base64:ZKRgrO71tXQZ8CZlKod5aGzCQfml142fQLzGyJ7BJls=
       FORCE_HTTPS: "false"
       MEMORY_LIMIT: "512"
     volumes:
