@@ -1,0 +1,36 @@
+manifestVersion: 1
+id: bionded-store-koel
+name: Koel
+tagline: A personal music streaming server that works
+icon: https://raw.githubusercontent.com/koel/koel/master/public/img/logo.svg
+category: Media
+version: "8.3.1"
+port: 8080
+description: >-
+  Koel is a simple web-based personal audio streaming service written in Vue and Laravel.
+  It lets you stream your own music collection from anywhere with a clean, modern interface.
+
+
+  Features include smart playlists, equalizer, YouTube video integration, Last.fm scrobbling,
+  media information fetching, multi-user support, and a responsive mobile-friendly UI.
+
+
+  Upload your music library to the Umbrel data directory and Koel will scan and organize it
+  automatically.
+
+developer: Phan An
+website: https://koel.dev
+submitter: Bionded app store
+submission: https://github.com/koel/koel
+repo: https://github.com/koel/koel
+support: https://github.com/koel/koel/issues
+gallery:
+  - https://koel.dev/img/screenshots/dashboard.webp
+  - https://koel.dev/img/screenshots/albums.webp
+  - https://koel.dev/img/screenshots/queue.webp
+releaseNotes: >-
+  Koel v8.3.1 packaged for Umbrel. Initial release.
+dependencies: []
+path: ""
+defaultUsername: "admin@koel.dev"
+defaultPassword: "KoelIsCool"

@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+
+  app_proxy:
+    environment:
+      APP_HOST: bionded-store-koel_web_1
+      APP_PORT: 80
+
+  web:
+    image: phanan/koel:latest
+    restart: on-failure
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: bionded-store-koel_db_1
+      DB_PORT: "3306"
+      DB_DATABASE: koel
+      DB_USERNAME: koel
+      DB_PASSWORD: koel_umbrel_secret
+      # A fixed APP_KEY so Koel survives container recreation.
+      # To rotate: run `docker exec <container> php artisan key:generate --show`
+      # then replace this value and restart.
+      APP_KEY: base64:ZHVtbXlrZXlmb3J1bWJyZWxrb2VsYXBwMTIzNA==
+      FORCE_HTTPS: "false"
+      MEMORY_LIMIT: "512"
+    volumes:
+      - ${APP_DATA_DIR}/music:/music
+      - ${APP_DATA_DIR}/covers:/var/www/html/public/img/storage
+      - ${APP_DATA_DIR}/search-indexes:/var/www/html/storage/search-indexes
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.11
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: koel_root_secret
+      MYSQL_DATABASE: koel
+      MYSQL_USER: koel
+      MYSQL_PASSWORD: koel_umbrel_secret
+    volumes:
+      - ${APP_DATA_DIR}/db:/var/lib/mysql
