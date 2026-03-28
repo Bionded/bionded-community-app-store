@@ -2,7 +2,7 @@ manifestVersion: 1
 id: bionded-store-koel
 name: Koel
 tagline: A personal music streaming server that works
-icon: https://raw.githubusercontent.com/koel/koel/master/public/img/logo.svg
+icon: https://raw.githubusercontent.com/Bionded/bionded-community-app-store/master/bionded-store-koel/icon.svg
 category: Media
 version: "8.3.1"
 port: 8080
@@ -25,9 +25,9 @@ submission: https://github.com/koel/koel
 repo: https://github.com/koel/koel
 support: https://github.com/koel/koel/issues
 gallery:
-  - https://koel.dev/img/screenshots/dashboard.webp
-  - https://koel.dev/img/screenshots/albums.webp
-  - https://koel.dev/img/screenshots/queue.webp
+  - https://raw.githubusercontent.com/Bionded/bionded-community-app-store/master/bionded-store-koel/gallery/1.webp
+  - https://raw.githubusercontent.com/Bionded/bionded-community-app-store/master/bionded-store-koel/gallery/2.webp
+  - https://raw.githubusercontent.com/Bionded/bionded-community-app-store/master/bionded-store-koel/gallery/3.webp
 releaseNotes: >-
   Koel v8.3.1 packaged for Umbrel. Initial release.
 dependencies: []

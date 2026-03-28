@@ -10,27 +10,11 @@ services:
   web:
     image: phanan/koel:latest
     restart: on-failure
-    entrypoint: /bin/bash
-    command:
-      - -c
-      - |
-        cat > /var/www/html/.env <<'ENVFILE'
-        APP_KEY=base64:ZKRgrO71tXQZ8CZlKod5aGzCQfml142fQLzGyJ7BJls=
-        DB_CONNECTION=mysql
-        DB_HOST=bionded-store-koel_db_1
-        DB_PORT=3306
-        DB_DATABASE=koel
-        DB_USERNAME=koel
-        DB_PASSWORD=koel_umbrel_secret
-        FORCE_HTTPS=false
-        MEMORY_LIMIT=512
-        APP_URL=http://localhost
-        ENVFILE
-        exec docker-php-entrypoint apache2-foreground
     volumes:
       - ${APP_DATA_DIR}/music:/music
       - ${APP_DATA_DIR}/covers:/var/www/html/public/img/storage
       - ${APP_DATA_DIR}/search-indexes:/var/www/html/storage/search-indexes
+      - ./koel.env:/var/www/html/.env
     depends_on:
       - db
 
