@@ -4,36 +4,26 @@ services:
 
   app_proxy:
     environment:
-      APP_HOST: bionded-store-koel_web_1
+      APP_HOST: bionded-store-koel_server_1
       APP_PORT: 80
 
-  koel_init:
-    image: alpine
-    restart: "no"
-    command: >
-      sh -c 'printf "APP_KEY=base64:ZKRgrO71tXQZ8CZlKod5aGzCQfml142fQLzGyJ7BJls=\nAPP_ENV=production\nAPP_DEBUG=false\nAPP_URL=http://localhost\nDB_CONNECTION=mysql\nDB_HOST=bionded-store-koel_db_1\nDB_PORT=3306\nDB_DATABASE=koel\nDB_USERNAME=koel\nDB_PASSWORD=koel_umbrel_secret\nFORCE_HTTPS=false\nMEMORY_LIMIT=512\nMEDIA_PATH=/music\n" > /data/.env'
-    volumes:
-      - ${APP_DATA_DIR}:/data
-
-  web:
+  server:
     image: phanan/koel:latest
     restart: on-failure
-    volumes:
-      - ${APP_DATA_DIR}/music:/music
-      - ${APP_DATA_DIR}/covers:/var/www/html/public/img/storage
-      - ${APP_DATA_DIR}/search-indexes:/var/www/html/storage/search-indexes
-      - ${APP_DATA_DIR}/.env:/var/www/html/.env
     depends_on:
-      - koel_init
-      - db
-
-  db:
-    image: mariadb:10.11
-    restart: on-failure
-    environment:
-      MYSQL_ROOT_PASSWORD: koel_root_secret
-      MYSQL_DATABASE: koel
-      MYSQL_USER: koel
-      MYSQL_PASSWORD: koel_umbrel_secret
+      - database
+    command: ["bash", "-c", "printf 'APP_KEY=base64:ZKRgrO71tXQZ8CZlKod5aGzCQfml142fQLzGyJ7BJls=\nAPP_ENV=production\nAPP_DEBUG=false\nAPP_URL=http://localhost\nDB_CONNECTION=pgsql\nDB_HOST=database\nDB_PORT=5432\nDB_DATABASE=koel\nDB_USERNAME=koel\nDB_PASSWORD=koel_umbrel_secret\nFORCE_HTTPS=false\nMEMORY_LIMIT=512\nMEDIA_PATH=/music\n' > /var/www/html/.env && exec apache2-foreground"]
     volumes:
-      - ${APP_DATA_DIR}/db:/var/lib/mysql
+      - ${APP_DATA_DIR}/music:/music:rw
+      - ${APP_DATA_DIR}/data/covers:/var/www/html/public/img/covers:rw
+      - ${APP_DATA_DIR}/data/search_index:/var/www/html/storage/search-indexes:rw
+
+  database:
+    image: postgres:13@sha256:a4c9ad5add8a2e4c86e123bfdaf940d120c0541b782f317ab4e630ab3d391650
+    restart: on-failure
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=koel
+      - POSTGRES_USER=koel
+      - POSTGRES_PASSWORD=koel_umbrel_secret
