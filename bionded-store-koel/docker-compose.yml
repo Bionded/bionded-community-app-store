@@ -7,28 +7,24 @@ services:
       APP_HOST: bionded-store-koel_web_1
       APP_PORT: 80
 
+  koel_init:
+    image: alpine
+    restart: "no"
+    command: >
+      sh -c 'printf "APP_KEY=base64:ZKRgrO71tXQZ8CZlKod5aGzCQfml142fQLzGyJ7BJls=\nAPP_ENV=production\nAPP_DEBUG=false\nAPP_URL=http://localhost\nDB_CONNECTION=mysql\nDB_HOST=bionded-store-koel_db_1\nDB_PORT=3306\nDB_DATABASE=koel\nDB_USERNAME=koel\nDB_PASSWORD=koel_umbrel_secret\nFORCE_HTTPS=false\nMEMORY_LIMIT=512\nMEDIA_PATH=/music\n" > /data/.env'
+    volumes:
+      - ${APP_DATA_DIR}:/data
+
   web:
     image: phanan/koel:latest
     restart: on-failure
-    environment:
-      APP_KEY: base64:ZKRgrO71tXQZ8CZlKod5aGzCQfml142fQLzGyJ7BJls=
-      APP_ENV: production
-      APP_DEBUG: "false"
-      APP_URL: http://localhost
-      DB_CONNECTION: mysql
-      DB_HOST: bionded-store-koel_db_1
-      DB_PORT: "3306"
-      DB_DATABASE: koel
-      DB_USERNAME: koel
-      DB_PASSWORD: koel_umbrel_secret
-      FORCE_HTTPS: "false"
-      MEMORY_LIMIT: "512"
-      MEDIA_PATH: /music
     volumes:
       - ${APP_DATA_DIR}/music:/music
       - ${APP_DATA_DIR}/covers:/var/www/html/public/img/storage
       - ${APP_DATA_DIR}/search-indexes:/var/www/html/storage/search-indexes
+      - ${APP_DATA_DIR}/.env:/var/www/html/.env
     depends_on:
+      - koel_init
       - db
 
   db:
