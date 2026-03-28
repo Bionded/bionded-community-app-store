@@ -12,7 +12,7 @@ A community app store for [umbrelOS](https://umbrel.com) containing curated self
 
 1. Open your umbrelOS dashboard.
 2. Go to **App Store** → **Community App Stores** (or the three-dot menu).
-3. Enter this repository URL: `https://github.com/<your-username>/koel-community-app-store`
+3. Enter this repository URL: `https://github.com/Bionded/bionded-community-app-store`
 4. Click **Add**. The store will appear and you can install Koel from it.
 
 ## Koel usage
